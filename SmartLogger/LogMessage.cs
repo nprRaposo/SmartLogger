@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace SmartLogger
 {
-    public class Class1
+    public class LogMessage
     {
+        public LogType Type { get; set; } 
+        public string Message { get; set; }
+
     }
 }
