@@ -11,7 +11,7 @@ namespace SmartLogger.LogStrategies
 {
     public class SqlLogger : ILogger
     {
-        public void Log(LogConfiguration logConfiguration, LogMessage aMessage)
+        public virtual void Log(LogConfiguration logConfiguration, LogMessage aMessage)
         {
             using (var connection = new SqlConnection(logConfiguration.ConnectionString))
             {

@@ -11,8 +11,8 @@ namespace SmartLogger
     public class LogManager
     {
         #region Properties
-        private IEnumerable<ILogger> LoggerStrategies { get; set; }
-        private IEnumerable<LogLevel> LoggerLevels { get; set; }
+        public virtual IEnumerable<ILogger> LoggerStrategies { get; set; }
+        public virtual IEnumerable<LogLevel> LoggerLevels { get; set; }
         private LogConfiguration LogConfiguration { get; set; }
         #endregion
 
@@ -22,6 +22,11 @@ namespace SmartLogger
             var logConfiguration = new LogConfiguration();
             this.Setup(logConfiguration);
         } 
+
+        public LogManager(LogConfiguration aLogConfiguration)
+        {
+            this.Setup(aLogConfiguration);
+        }
         #endregion
 
         public void Message(string aMessage)
@@ -57,7 +62,7 @@ namespace SmartLogger
             }
         }
 
-        public void Setup(LogConfiguration loggerConfiguration)
+        private void Setup(LogConfiguration loggerConfiguration)
         {
             this.LogConfiguration = loggerConfiguration;
             this.LoggerLevels = this.GetLevelsFromConfig(loggerConfiguration.LogLevels);
@@ -92,7 +97,7 @@ namespace SmartLogger
             return loggerStrategies;
         }
 
-        private bool HasToBeLogged(LogMessage aLogMessage)
+        public bool HasToBeLogged(LogMessage aLogMessage)
         {
             return this.LoggerLevels.Contains(aLogMessage.Level);
         }

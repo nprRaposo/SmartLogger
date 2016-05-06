@@ -10,7 +10,7 @@ namespace SmartLogger.LogStrategies
 {
     public class TextFileLogger : ILogger
     {
-        public void Log(LogConfiguration logConfiguration, LogMessage aMessage)
+        public virtual void Log(LogConfiguration logConfiguration, LogMessage aMessage)
         {
             try
             {
@@ -28,7 +28,13 @@ namespace SmartLogger.LogStrategies
         #region Private Methods
         private string GetFilePath(string path)
         {
-            return path + "LogFile" + DateTime.Now.ToShortDateString() + ".txt";
+            var sb = new StringBuilder();
+            sb.Append(path)
+                .Append("LogFile")
+                .Append(DateTime.Now.ToShortDateString())
+                .Append(".txt");
+
+            return sb.ToString();
         } 
         #endregion
     }
