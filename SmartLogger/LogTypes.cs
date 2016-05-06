@@ -8,8 +8,9 @@ namespace SmartLogger
 {
     public enum LogType
     {
+        Message = 1,
         Warning,
-        Error,
-        Message
+        Error
+        
     }
 }
