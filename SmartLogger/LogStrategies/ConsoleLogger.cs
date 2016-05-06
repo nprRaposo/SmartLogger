@@ -10,7 +10,7 @@ namespace SmartLogger.LogStrategies
 {
     public class ConsoleLogger : ILogger
     {
-        public void Log(LogMessage aMessage)
+        public void Log(LogConfiguration logConfiguration, LogMessage aMessage)
         {
             try
             {

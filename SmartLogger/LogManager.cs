@@ -12,7 +12,8 @@ namespace SmartLogger
     {
         #region Properties
         private IEnumerable<ILogger> LoggerStrategies { get; set; }
-        private IEnumerable<LogLevel> LoggerLevels { get; set; } 
+        private IEnumerable<LogLevel> LoggerLevels { get; set; }
+        private LogConfiguration LogConfiguration { get; set; }
         #endregion
 
         #region Constructor
@@ -52,12 +53,13 @@ namespace SmartLogger
 
             foreach (var logStrategy in this.LoggerStrategies)
             {
-                logStrategy.Log(logMessage);
+                logStrategy.Log(this.LogConfiguration, logMessage);
             }
         }
 
         public void Setup(LogConfiguration loggerConfiguration)
         {
+            this.LogConfiguration = loggerConfiguration;
             this.LoggerLevels = this.GetLevelsFromConfig(loggerConfiguration.LogLevels);
             this.LoggerStrategies = this.GetLogStrategiesFromConfig(loggerConfiguration.LogTypes);
         } 

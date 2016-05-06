@@ -10,21 +10,12 @@ namespace SmartLogger.LogStrategies
 {
     public class TextFileLogger : ILogger
     {
-
-        #region Properties
-        private string FilePath { get; set; } 
-        #endregion
-
-        public TextFileLogger()
-        {
-            this.FilePath = ConfigurationManager.AppSettings["LogFileDirectory"] + "LogFile" + DateTime.Now.ToShortDateString() + ".txt";
-        }
-        
-        public void Log(LogMessage aMessage)
+        public void Log(LogConfiguration logConfiguration, LogMessage aMessage)
         {
             try
             {
-                using (StreamWriter sw = File.AppendText(this.FilePath))
+                var filePath = this.GetFilePath(logConfiguration.FileDirectory);
+                using (StreamWriter sw = File.AppendText(filePath))
                 {
                     sw.WriteLine(aMessage.MessageToLog);
                 }
@@ -33,5 +24,12 @@ namespace SmartLogger.LogStrategies
             {
             }
         }
+
+        #region Private Methods
+        private string GetFilePath(string path)
+        {
+            return path + "LogFile" + DateTime.Now.ToShortDateString() + ".txt";
+        } 
+        #endregion
     }
 }

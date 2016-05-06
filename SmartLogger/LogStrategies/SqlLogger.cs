@@ -11,19 +11,9 @@ namespace SmartLogger.LogStrategies
 {
     public class SqlLogger : ILogger
     {
-
-        #region Properties
-        private string ConnectionString { get; set; } 
-        #endregion
-
-        public SqlLogger()
+        public void Log(LogConfiguration logConfiguration, LogMessage aMessage)
         {
-            this.ConnectionString = System.Configuration.ConfigurationManager.AppSettings["ConnectionString"];
-        }
-
-        public void Log(LogMessage aMessage)
-        {
-            using (var connection = new SqlConnection(this.ConnectionString))
+            using (var connection = new SqlConnection(logConfiguration.ConnectionString))
             {
                 connection.Open();
                 var command = connection.CreateCommand();
@@ -49,31 +39,5 @@ namespace SmartLogger.LogStrategies
                 }
             }
         }
-
-        #region Private Methods
-        private ConsoleColor GetBackGroundFor(LogMessage aLogMessage)
-        {
-            switch (aLogMessage.Level)
-            {
-                case LogLevel.Error:
-                    {
-                        return ConsoleColor.Red;
-                        break;
-                    }
-                case LogLevel.Message:
-                    {
-                        return ConsoleColor.White;
-                        break;
-                    }
-                case LogLevel.Warning:
-                    {
-                        return ConsoleColor.Yellow;
-                        break;
-                    }
-                default:
-                    return ConsoleColor.Black;
-            }
-        } 
-        #endregion
     }
 }
