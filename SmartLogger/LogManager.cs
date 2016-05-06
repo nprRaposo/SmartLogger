@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
+using SmartLogger.Exceptions;
 
 namespace SmartLogger
 {
@@ -47,26 +48,40 @@ namespace SmartLogger
         #region Private Methods
         private void WriteLog(string message, LogLevel level)
         {
-            var logMessage = new LogMessage
+            try
             {
-                Level = level,
-                Message = message
-            };
+                var logMessage = new LogMessage
+                    {
+                        Level = level,
+                        Message = message
+                    };
 
-            if (!this.HasToBeLogged(logMessage))
-                return;
+                if (!this.HasToBeLogged(logMessage))
+                    return;
 
-            foreach (var logStrategy in this.LoggerStrategies)
+                foreach (var logStrategy in this.LoggerStrategies)
+                {
+                    logStrategy.Log(this.LogConfiguration, logMessage);
+                }
+            }
+            catch (Exception ex)
             {
-                logStrategy.Log(this.LogConfiguration, logMessage);
+                throw new LogManagerException(ex.Message, ex);
             }
         }
 
         private void Setup(LogConfiguration loggerConfiguration)
         {
-            this.LogConfiguration = loggerConfiguration;
-            this.LoggerLevels = this.GetLevelsFromConfig(loggerConfiguration.LogLevels);
-            this.LoggerStrategies = this.GetLogStrategiesFromConfig(loggerConfiguration.LogTypes);
+            try
+            {
+                this.LogConfiguration = loggerConfiguration;
+                this.LoggerLevels = this.GetLevelsFromConfig(loggerConfiguration.LogLevels);
+                this.LoggerStrategies = this.GetLogStrategiesFromConfig(loggerConfiguration.LogTypes);
+            }
+            catch (Exception ex)
+            {
+                throw new LogManagerException(ex.Message, ex);
+            }
         } 
 
         private IEnumerable<LogLevel> GetLevelsFromConfig(IEnumerable<string> levels)

@@ -40,6 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\LogConfigurationException.cs" />
+    <Compile Include="Exceptions\LogManagerException.cs" />
+    <Compile Include="Exceptions\LogTypeException.cs" />
     <Compile Include="LogConfiguration.cs" />
     <Compile Include="LogManager.cs" />
     <Compile Include="LogMessage.cs" />

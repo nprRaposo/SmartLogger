@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Data.SqlClient;
+using SmartLogger.Exceptions;
 
 namespace SmartLogger.LogStrategies
 {
@@ -32,9 +33,11 @@ namespace SmartLogger.LogStrategies
                     try
                     {
                         transaction.Rollback();
+                        throw new LogTypeException(ex.Message, ex);
                     }
                     catch (Exception anotherEx)
                     {
+                        throw new LogTypeException(ex.Message, anotherEx);
                     }
                 }
             }

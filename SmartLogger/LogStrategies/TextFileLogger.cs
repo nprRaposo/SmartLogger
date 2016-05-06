@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using SmartLogger.Exceptions;
 
 namespace SmartLogger.LogStrategies
 {
@@ -22,6 +23,7 @@ namespace SmartLogger.LogStrategies
             }
             catch (Exception ex)
             {
+                throw new LogTypeException(ex.Message, ex);
             }
         }
 
