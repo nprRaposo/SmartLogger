@@ -33,7 +33,7 @@ namespace SmartLogger.LogStrategies
 
                 try
                 {
-                    command.CommandText = "Insert into Log VALUES (" + aMessage.Message + "," + aMessage.Type.ToString() + ");";
+                    command.CommandText = "Insert into Log VALUES (" + aMessage.Message + "," + aMessage.Level.ToString() + ");";
                     command.ExecuteNonQuery();
                     transaction.Commit();
                 }
@@ -53,19 +53,19 @@ namespace SmartLogger.LogStrategies
         #region Private Methods
         private ConsoleColor GetBackGroundFor(LogMessage aLogMessage)
         {
-            switch (aLogMessage.Type)
+            switch (aLogMessage.Level)
             {
-                case LogType.Error:
+                case LogLevel.Error:
                     {
                         return ConsoleColor.Red;
                         break;
                     }
-                case LogType.Message:
+                case LogLevel.Message:
                     {
                         return ConsoleColor.White;
                         break;
                     }
-                case LogType.Warning:
+                case LogLevel.Warning:
                     {
                         return ConsoleColor.Yellow;
                         break;

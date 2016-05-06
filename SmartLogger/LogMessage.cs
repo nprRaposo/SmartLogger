@@ -8,7 +8,7 @@ namespace SmartLogger
 {
     public class LogMessage
     {
-        public LogType Type { get; set; } 
+        public LogLevel Level { get; set; } 
         public string Message { get; set; }
         public string MessageToLog { get { return DateTime.Now.ToShortDateString() + this.Message; } } 
     }

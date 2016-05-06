@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartLogger
 {
-    public enum LogType
+    public enum LogLevel
     {
         Message = 1,
         Warning,
