@@ -10,6 +10,6 @@ namespace SmartLogger
     {
         public LogType Type { get; set; } 
         public string Message { get; set; }
-
+        public string MessageToLog { get { return DateTime.Now.ToShortDateString() + this.Message; } } 
     }
 }
